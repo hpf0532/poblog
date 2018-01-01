@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{titile}} - poblog</title>
+    {% else %}
+    <title>poblog</title>\
+    {% endif %}
+</head>
+<body>
+    <div>poblog:<a href="/index">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
