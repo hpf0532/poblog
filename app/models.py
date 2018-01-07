@@ -1,5 +1,4 @@
-from app import db
-from app import login_manager
+from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -19,5 +18,9 @@ class User(UserMixin, db.Model):
         self.password_hash = generate_password_hash(password)
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
         return '<User %r>' % (self.username)
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))

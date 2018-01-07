@@ -21,11 +21,9 @@
     {% endif %}
     {% endwith %}
     <ul>
-        {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
-        {% else %}
         <li><a href="{{ url_for('login') }}">Sign In</a></li>
-        {% endif %}
+        <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+        <li><a href="{{ url_for('register') }}">注册新用户</a></li>
     </ul>
     {% block content %}{% endblock %}
 </body>

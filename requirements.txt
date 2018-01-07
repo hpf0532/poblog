@@ -1,10 +1,7 @@
 alembic==0.9.6
-Babel==2.5.1
 click==6.7
-decorator==4.1.2
 Flask==0.12.2
-Flask-Babel==0.11.2
-Flask-Login==0.4.1
+Flask-Login==0.2.11
 Flask-Migrate==2.1.1
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
@@ -14,13 +11,9 @@ Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.0
 MySQL-python==1.2.4
-pbr==3.1.1
 python-dateutil==2.6.1
 python-editor==1.0.3
-pytz==2017.3
 six==1.11.0
 SQLAlchemy==1.1.15
-sqlparse==0.2.4
-Tempita==0.5.2
-Werkzeug==0.14.1
+Werkzeug==0.13
 WTForms==2.1
