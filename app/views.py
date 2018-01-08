@@ -2,12 +2,17 @@ from flask import render_template, flash, redirect, request, url_for, g
 from app import app, db
 from app import login_manager
 from app.models import User
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditForm
 from flask_login import login_required, login_user, current_user, logout_user
+from datetime import datetime
 
 @app.before_request
 def before_request():
     g.user = current_user
+    if g.user.is_authenticated():
+        g.user.last_seen = datetime.now()
+        db.session.add(g.user)
+        db.session.commit()
 
 @app.route('/secret')
 @login_required
@@ -81,3 +86,19 @@ def user(username):
     return render_template('user.html',
                            user = user,
                            posts = posts)
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    form = EditForm()
+    if form.validate_on_submit():
+        g.user.username = form.username.data
+        g.user.about_me = form.about_me.data
+        db.session.add(g.user)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('user', username = g.user.username))
+    else:
+        form.username.data = g.user.username
+        form.about_me.data = g.user.about_me
+    return render_template('edit.html', form=form)
