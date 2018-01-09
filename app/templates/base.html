@@ -27,8 +27,7 @@
     {% endwith %}
     <ul>
         {% if g.user.is_anonymous() %}
-        <li><a href="{{ url_for('login') }}">Sign In</a></li>
-        <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
+        <li><a href="{{ url_for('login') }}">登录</a></li>
         <li><a href="{{ url_for('register') }}">注册新用户</a></li>
         {% endif %}
     </ul>

@@ -17,6 +17,7 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
+
     def validate_username(self, username):
         user = User.query.filter_by(username = username.data).first()
         if user is not None:
@@ -30,3 +31,18 @@ class RegistrationForm(FlaskForm):
 class EditForm(FlaskForm):
     username = StringField('username', validators=[DataRequired()])
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=150)])
+
+    def __init__(self, original_username, *args, **kwargs):
+        FlaskForm.__init__(self, *args, **kwargs)
+        self.original_username = original_username
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+        if self.username.data == self.original_username:
+            return True
+        user = User.query.filter_by(username=self.username.data).first()
+        if user != None:
+            self.username.errors.append('This username is already in use. Please choose another one.')
+            return False
+        return True

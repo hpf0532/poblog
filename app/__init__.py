@@ -19,4 +19,4 @@ login_manager.login_view = 'login'
 
 #db.init_app(app)
 
-from app import views, models
+from app import views, models, errors
