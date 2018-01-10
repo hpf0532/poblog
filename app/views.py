@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, request, url_for, g
 from app import app, db
 from app import login_manager
-from app.models import User
-from app.forms import LoginForm, RegistrationForm, EditForm
+from app.models import User, Post
+from app.forms import LoginForm, RegistrationForm, EditForm, PostForm
 from flask_login import login_required, login_user, current_user, logout_user
 from datetime import datetime
 
@@ -20,23 +20,18 @@ def secret():
     return 'Only authenticated users are allowed!'
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods = ['GET', 'POST'])
 @login_required
 def index():
-    user = {'username' : 'hpf'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.body.data, timestamp=datetime.now(), user_id=g.user.id)
+        db.session.add(post)
+        db.session.commit()
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template("index.html",
                            title='Home',
-                           user=user,
+                           form=form,
                            posts=posts)
 
 

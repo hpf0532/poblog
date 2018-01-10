@@ -46,3 +46,7 @@ class EditForm(FlaskForm):
             self.username.errors.append('This username is already in use. Please choose another one.')
             return False
         return True
+
+class PostForm(FlaskForm):
+    body = TextAreaField("What's on your mind?", validators=[DataRequired()])
+    submit = SubmitField('Submit')
