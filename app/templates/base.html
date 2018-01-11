@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/static/ckeditor/ckeditor.js"></script>
+
+
     {% if title %}
     <title>{{titile}} - poblog</title>
     {% else %}
@@ -32,5 +35,6 @@
         {% endif %}
     </ul>
     {% block content %}{% endblock %}
+
 </body>
 </html>

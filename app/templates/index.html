@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Hi, {{current_user.username}}</h1>
 
 <form action="{{ url_for('index') }}" method="POST" name="index">
     {{form.hidden_tag()}}
     <p>
+
         {{ form.body.label }}<br>
-        {{ form.body }}<br>
+        {{ form.body(class="ckeditor") | safe}}<br>
         {% for error in form.body.errors %}
             <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
         <p>{{ form.submit() }}</p>
-    </p>
 
+
+    </p>
 </form>
 {% for post in posts %}
-<div><p>{{post.author.username}} says: <b>{{post.body}}</b></p></div>
+<div><p>{{post.author.username}} says: <b>{{post.body | safe }}</b></p></div>
 {% endfor %}
+
 {% endblock %}
