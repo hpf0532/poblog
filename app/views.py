@@ -23,17 +23,23 @@ def secret():
 @app.route('/index', methods = ['GET', 'POST'])
 @login_required
 def index():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(body=form.body.data, timestamp=datetime.now(), user_id=g.user.id)
-        db.session.add(post)
-        db.session.commit()
     posts = Post.query.order_by(Post.timestamp.desc()).all()
+    print posts
     return render_template("index.html",
                            title='Home',
-                           form=form,
                            posts=posts)
 
+@app.route('/editblog', methods = ['GET', 'POST'])
+@login_required
+def editblog():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, body=form.body.data, timestamp=datetime.now(), user_id=g.user.id)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template("blog_edit.html",
+                           form=form)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():

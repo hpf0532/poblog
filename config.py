@@ -6,7 +6,7 @@ SECRET_KEY = 'Just-guess'
 MYSQL_DB = 'poblog'
 MYSQL_USER = 'poblog'
 MYSQL_PASSWD = '111111'
-MYSQL_HOST = '192.168.1.161'
+MYSQL_HOST = '192.168.1.162'
 MYSQL_PORT = 3306
 
 basedir = os.path.abspath(os.path.dirname(__file__))

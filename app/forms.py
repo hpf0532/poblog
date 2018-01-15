@@ -48,5 +48,6 @@ class EditForm(FlaskForm):
         return True
 
 class PostForm(FlaskForm):
+    title = StringField('title', validators=[DataRequired()])
     body = TextAreaField("What's on your mind?", validators=[DataRequired()])
     submit = SubmitField('Submit')
