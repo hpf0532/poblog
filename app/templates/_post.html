@@ -1,6 +1,5 @@
-<table>
-    <tr valign="top">
-        <td><img src="{{ post.author.avatar(50) }}" </td>
-        <td><i>{{ post.author.username }} says:</i><br>{{ post.body }}</td>
-    </tr>
-</table>
+<div>
+    <h2>{{ post.title }}</h2>
+    <p><img src="{{post.author.avatar(40)}}">作者：{{post.author.username}} 发布时间：{{ post.timestamp }}<br>
+        <b>{{post.body | safe }}</b></p><hr>
+</div>

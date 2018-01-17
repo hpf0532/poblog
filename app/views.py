@@ -5,6 +5,7 @@ from app.models import User, Post
 from app.forms import LoginForm, RegistrationForm, EditForm, PostForm
 from flask_login import login_required, login_user, current_user, logout_user
 from datetime import datetime
+from config import POSTS_PER_PAGE
 
 @app.before_request
 def before_request():
@@ -21,10 +22,10 @@ def secret():
 
 @app.route('/')
 @app.route('/index', methods = ['GET', 'POST'])
+@app.route('/index/<int:page>', methods = ['GET', 'POST'])
 @login_required
-def index():
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
-    print posts
+def index(page = 1):
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page, POSTS_PER_PAGE, False)
     return render_template("index.html",
                            title='Home',
                            posts=posts)
@@ -37,6 +38,7 @@ def editblog():
         post = Post(title=form.title.data, body=form.body.data, timestamp=datetime.now(), user_id=g.user.id)
         db.session.add(post)
         db.session.commit()
+        flash('Your post is now live!')
         return redirect(url_for('index'))
     return render_template("blog_edit.html",
                            form=form)

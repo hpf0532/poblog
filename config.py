@@ -22,6 +22,9 @@ MAIL_PASSWORD = None
 #admin list
 ADMINS = ['hpf1992@126.com']
 
+#pagination
+POSTS_PER_PAGE = 5
+
 OPENID_PROVIDERS = [
     { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
     { 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
